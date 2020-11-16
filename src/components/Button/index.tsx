@@ -15,7 +15,7 @@ export enum ButtonType {
 }
 interface BaseButtonProps {
     className?:string,
-    disable?:boolean,
+    disabled?:boolean,
     size?:ButtonSize,
     btnType?:ButtonType,
     children: React.ReactChild
@@ -29,7 +29,7 @@ const Button: React.FC<BaseButtonProps> = (props)=>{
     return <div className={cl}>{children}</div>
 }
 Button.defaultProps ={
-    children: 'cnm',
-    btnType: 'default'
+    children: 'ccc',
+    btnType: ButtonType.Default
  }
 export default Button;
