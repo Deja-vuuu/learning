@@ -3,7 +3,7 @@ import { MenuContext } from './index'
 import classNames  from "classnames";
 
 export interface MenuItemProps{
-    index:number;
+    index?:number;
     className?: string;
     disabled?: boolean;
     style?: React.CSSProperties;
@@ -17,10 +17,11 @@ const MenuItem:React.FC<MenuItemProps> =(props)=>{
     return <div
         className={className}
         onClick={()=>{
-        context.onSelect(props.index)
+            context.onSelect && typeof (index)==='number' && context.onSelect(index)
     }}>{children}</div>
 }
 MenuItem.defaultProps = {
-    // index: 0,
+    index: 0,
 }
+MenuItem.displayName = 'menuItem'
 export default MenuItem;

@@ -11,13 +11,16 @@ function App() {
     return (
     <div className="App">
     <Menu>
-        <MenuItem index={0}>
+        <MenuItem>
             <div>这样可以</div>
         </MenuItem >
-        <MenuItem index={1}>
+        <MenuItem>
             <div>这样可以</div>
         </MenuItem>
-        <MenuItem index={2}>
+        <div>
+            不可以
+        </div>
+        <MenuItem>
             <div>这样可以</div>
         </MenuItem>
     </Menu>
