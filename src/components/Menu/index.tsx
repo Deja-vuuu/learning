@@ -1,60 +1,17 @@
-import React, {useState, createContext, ReactElement} from "react";
-// import classNames  from "classnames";
-import {MenuItemProps} from './menuItem'
+import React from "react";
 
-type MenuMode = 'h' | 'v'
-type SellectCallBack  = (selectIndex: number)=>void
-export interface MenuProps{
-    defaultIndex?:number;
-    className: string;
-    mode:MenuMode;
-    style: React.CSSProperties;
-    onSelect? :SellectCallBack;
-    children? : React.ReactElement[]
-    // children:React.ReactChild
+import Menu, { MenuProps } from "./menu";
+import MenuSub,{SubMenuProps} from "./subMenu";
+import MenuItem,{MenuItemProps} from "./menuItem";
+
+export type IMenuComponent = React.FC<MenuProps> & {
+    Item: React.FC<MenuItemProps>,
+    SubMenu: React.FC<SubMenuProps>,
+
 }
-interface IMenuContext{
-    index: number;
-    onSelect?:SellectCallBack
-}
-export const MenuContext = createContext<IMenuContext>({
-    index: 1,
-    // onSelect: ()=>{}
-})
-type BaseMenuProps = Partial<MenuProps>
-const Menu:React.FC<BaseMenuProps> =(props)=>{
-    const {defaultIndex,onSelect,children} = props;
-    const [currentActive, setCurrentActive] = useState(defaultIndex)
-    const handlClick =(index:number)=>{
-        setCurrentActive(index)
-        onSelect && onSelect(index);
-    }
-    const passedContext = {
-        index: currentActive? currentActive: 0,
-        onSelect: handlClick
-    }
-    console.log(children && React.Children.toArray(children))
-    console.log(children && React.Children)
-    const renderChildren = ()=>{
-        return React.Children.map(children, (value,index) => {
-            const childElement = value as React.FunctionComponentElement<MenuItemProps>
-            const {displayName} = childElement.type
-            console.log('childElement',childElement)
-            if(displayName === 'menuItem'){
-               return React.cloneElement(childElement,{index})
-           }else {
-                console.error('error')
-            }
-        })
-    }
-    return <MenuContext.Provider value={passedContext}>
-        {
-            renderChildren()
-        }
-    </MenuContext.Provider>
-}
-Menu.defaultProps = {
-    defaultIndex: 0,
-    mode: 'h'
-}
-export default Menu;
+
+const AMenu = Menu as IMenuComponent
+AMenu.Item= MenuItem
+AMenu.SubMenu= MenuSub
+
+export default AMenu
